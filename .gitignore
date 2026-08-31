@@ -11,6 +11,7 @@ dist/
 android/app/build/
 android/.gradle/
 android/local.properties
+android/keystore.properties
 android/captures/
 android/gradletemp/
 android/variables.gradle.bak
