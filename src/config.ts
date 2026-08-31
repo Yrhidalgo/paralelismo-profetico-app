@@ -2,8 +2,8 @@
  * Configuración global del cliente para Paralelismo Profético
  */
 
-// URL de producción del Backend (Cambiar por la URL real de despliegue)
-export const API_BASE_URL = 'https://paralelismoprofetico.app.example.com';
+// URL de producción del Backend en Vercel
+export const API_BASE_URL = 'https://paralelismo-profetico-app.vercel.app';
 
 // Detecta si estamos en el cliente (navegador/Android)
 export const isProduction = true;
