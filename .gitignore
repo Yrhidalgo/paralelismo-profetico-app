@@ -1,0 +1,18 @@
+node_modules/
+dist/
+.idea/
+.vscode/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Android
+android/app/build/
+android/.gradle/
+android/local.properties
+android/captures/
+android/gradletemp/
+android/variables.gradle.bak
+*.jks
+*.keystore

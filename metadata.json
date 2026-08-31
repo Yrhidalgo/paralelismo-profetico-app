@@ -1,0 +1,7 @@
+{
+  "name": "Biblia y Venezuela: Paralelos y Actualidad",
+  "description": "Análisis comparativo entre los relatos de la Biblia y los acontecimientos globales de actualidad en economía, sociedad y finanzas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

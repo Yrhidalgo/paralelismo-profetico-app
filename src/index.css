@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #060609;
+    color: #f3f4f6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Gen Z Frosted Glass Gray Cards (Vidrio Esmerilado Gris) */
+.glass-gray {
+  background: rgba(24, 24, 32, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+}
+
+.glass-gray-card {
+  background: rgba(18, 18, 26, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6);
+}
+
+.glass-gray-inner {
+  background: rgba(30, 30, 42, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-gray-quote {
+  background: rgba(26, 26, 38, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Custom Gen Z Neon Glows & Gradient Animations */
+.neon-glow-cyan {
+  box-shadow: 0 0 25px -2px rgba(6, 182, 212, 0.45), 0 0 10px -2px rgba(6, 182, 212, 0.3);
+}
+
+.neon-glow-pink {
+  box-shadow: 0 0 25px -2px rgba(236, 72, 153, 0.5), 0 0 10px -2px rgba(236, 72, 153, 0.3);
+}
+
+.neon-glow-amber {
+  box-shadow: 0 0 25px -2px rgba(245, 158, 11, 0.45), 0 0 10px -2px rgba(245, 158, 11, 0.25);
+}
+
+.neon-glow-fuchsia {
+  box-shadow: 0 0 25px -2px rgba(217, 70, 239, 0.48), 0 0 10px -2px rgba(217, 70, 239, 0.3);
+}
+
+.neon-glow-emerald {
+  box-shadow: 0 0 25px -2px rgba(16, 185, 129, 0.45), 0 0 10px -2px rgba(16, 185, 129, 0.25);
+}
+
+.neon-border-gradient {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.6), rgba(168, 85, 247, 0.6), rgba(236, 72, 153, 0.6));
+}
+
+.text-gradient-cyan-fuchsia {
+  background: linear-gradient(to right, #00f0ff, #d946ef, #ff007a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold-amber {
+  background: linear-gradient(to right, #fde047, #f59e0b, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-cyber {
+  background: linear-gradient(135deg, #38bdf8 0%, #a855f7 50%, #f43f5e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #060609;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #242432;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a4e;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
