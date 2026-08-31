@@ -9,6 +9,14 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+// CORS Middleware for Android/Capacitor
+app.use((_req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 // Initialize Gemini Client
 function getGeminiClient(): GoogleGenAI | null {
   const apiKey = process.env.GEMINI_API_KEY;
@@ -25,12 +33,23 @@ function getGeminiClient(): GoogleGenAI | null {
   });
 }
 
-// HEALTH
+// HEALTH (Vercel path)
 app.get("/api/health", (_req, res) => {
   res.status(200).json({
     status: "ok",
     service: "paralelismo-profetico",
-    env: "vercel-serverless"
+    env: "vercel-serverless",
+    path: "/api/health"
+  });
+});
+
+// HEALTH (Root path alias)
+app.get("/health", (_req, res) => {
+  res.status(200).json({
+    status: "ok",
+    service: "paralelismo-profetico",
+    env: "vercel-serverless",
+    path: "/health"
   });
 });
 
