@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { scrapeGlobalNews, ScrapedArticle } from "./scraper";
+import { scrapeGlobalNews, ScrapedArticle } from "./scraper.js";
 
 export interface ProcessedParallelItem {
   id: string;

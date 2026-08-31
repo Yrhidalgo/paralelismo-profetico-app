@@ -3,8 +3,8 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
-import { generateGlobalParallelism } from "./server/parallelism";
-import { scrapeGlobalNews } from "./server/scraper";
+import { generateGlobalParallelism } from "./server/parallelism.js";
+import { scrapeGlobalNews } from "./server/scraper.js";
 
 dotenv.config();
 
