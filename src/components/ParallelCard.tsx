@@ -248,6 +248,26 @@ ${parallel.venezuelaNewsContext.summary}
                   </span>
                 </div>
 
+                {/* Contemporary Reality Illustration */}
+                {parallel.venezuelaNewsContext.imageUrl && (
+                  <div className="relative rounded-xl overflow-hidden border border-rose-500/30 bg-black/60 mb-3.5 group/modern max-h-[145px] sm:max-h-[190px]">
+                    <img
+                      src={parallel.venezuelaNewsContext.imageUrl}
+                      alt={parallel.venezuelaNewsContext.imageCaption || parallel.title}
+                      className={`w-full h-28 sm:h-36 md:h-40 object-cover object-center transform group-hover/modern:scale-[1.02] transition-transform duration-500 ${parallel.venezuelaNewsContext.imageUrl === parallel.biblicalPassage.imageUrl ? 'grayscale brightness-[0.8] opacity-70' : ''}`}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none" />
+                    <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-zinc-200">
+                      <span className="text-rose-300 font-medium truncate max-w-[85%]">
+                        {parallel.venezuelaNewsContext.imageCaption || 'Realidad Contemporánea'}
+                      </span>
+                      <span className="text-fuchsia-400 text-[8.5px] uppercase tracking-wider shrink-0 hidden xs:inline-block">
+                        Hecho Actual
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 <h3 className="text-base sm:text-lg font-bold font-display text-white mb-2 leading-snug group-hover:text-rose-200 transition-colors">
                   {parallel.venezuelaNewsContext.headline}
                 </h3>

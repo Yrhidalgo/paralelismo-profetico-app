@@ -35,7 +35,9 @@ export const BIBLICAL_PARALLELS: BiblicalParallel[] = [
         'Caminantes atravesando la densa selva del Darién en busca de protección y empleo.',
         'Familias divididas geográficamente enviando apoyo desde el extranjero.',
         'Comunidades de fe venezolanas fundadas en ciudades de Colombia, Perú, Chile, EE.UU. y España.'
-      ]
+      ],
+      imageUrl: exodusImg, // Placeholder: Modern counterpart required
+      imageCaption: 'Realidad Contemporánea: Grupos de caminantes y familias desplazadas buscando refugio y nuevas oportunidades.'
     },
     parallelAnalysis: 'El paralelo entre el Éxodo bíblico y la diáspora venezolana radica en la necesidad imperiosa de huir de condiciones invivibles de servidumbre económica y opresión política. Así como los israelitas caminaron por senderos hostiles confiando en la guía divina, millones de caminantes venezolanos enfrentan selvas, fronteras y discriminación llevando consigo su cultura, sus oraciones y su fe intacta.',
     reflection: 'La fe en tiempos de exilio recuerda las palabras de Jeremías a los deportados: "Edificad casas, habitadlas, plantad huertos y comed del fruto de ellos... y procurad la paz de la ciudad adonde os hice transportar". La diáspora venezolana ha demostrado ser semillera de trabajo honrado, resiliencia y testimonio cristiano en toda América Latina y el mundo.',
@@ -65,7 +67,9 @@ export const BIBLICAL_PARALLELS: BiblicalParallel[] = [
         'Sueldos mínimos que apenas alcanzan para comprar un cartón de huevos o un kilo de queso.',
         'Dependencia extrema de remesas familiares y economía informal.',
         'Indexación de precios al dólar mientras los salarios públicos permanecen rezagados.'
-      ]
+      ],
+      imageUrl: scarcityImg, // Placeholder: Modern counterpart required
+      imageCaption: 'Realidad Contemporánea: El impacto del encarecimiento de la vida en los mercados y la canasta alimentaria.'
     },
     parallelAnalysis: 'El texto de Apocalipsis 6:6 profetiza una época donde el trabajo de todo un día (un denario) apenas alcanza para comprar el pan básico diario para una persona. La realidad económica venezolana durante el pico hiperinflacionario es la manifestación contemporánea exacta de este fenómeno: el esfuerzo laboral desvalorizado en "saco roto" y la angustia diaria por la manutención del hogar.',
     reflection: 'Frente a la escasez, la Biblia muestra la provisión milagrosa de Dios (como la viuda de Sarepta en 1 Reyes 17). La familia venezolana ha desarrollado una fe profunda que confía en el Dios sustentador diario: "El pan nuestro de cada día, dánoslo hoy".',
@@ -95,7 +99,9 @@ export const BIBLICAL_PARALLELS: BiblicalParallel[] = [
         'Detención de más de 2.000 ciudadanos tras protestas ciudadanas post-electorales.',
         'Inhabilitación y persecución contra líderes de la oposición democrática.',
         'Informes del Consejo de Derechos Humanos señalando crímenes de opresión estatal.'
-      ]
+      ],
+      imageUrl: justiceImg, // Placeholder: Modern counterpart required
+      imageCaption: 'Realidad Contemporánea: El clamor ciudadano por la transparencia institucional y el respeto a los derechos humanos.'
     },
     parallelAnalysis: 'El abuso de poder gubernamental para aferrarse al mando silenciando la voluntad popular es un tema recurrente en las Escrituras. Nabot fue víctima del abuso judicial de reyes sin temor de Dios. Las noticias de denuncias internacionales en Venezuela reflejan este patrón bíblico donde el poder político se aparta de la justicia divina para oprimir a la ciudadanía.',
     reflection: 'La Biblia asegura que Dios no es indiferente al clamor de los perseguidos: "El Señor ejecuta justicia y juicio a favor de todos los que padecen violencia" (Salmo 103:6). El anhelo de verdad y justicia en Venezuela trasciende lo político y se convierte en un clamor espiritual.',
@@ -125,7 +131,9 @@ export const BIBLICAL_PARALLELS: BiblicalParallel[] = [
         'Miles de niños atendidos a diario en comedores comunitarios gestionados por madres voluntarias.',
         'Remesas familiares convertidas en medicinas compartidas con vecinos de la tercera edad.',
         'Redes eclesiales enviando insumos médicos a hospitales con déficit de suministros.'
-      ]
+      ],
+      imageUrl: solidarityImg, // Placeholder: Modern counterpart required
+      imageCaption: 'Realidad Contemporánea: La organización vecinal y religiosa para el sustento de los más necesitados.'
     },
     parallelAnalysis: 'Las "ollas comunitarias" en los barrios de Venezuela son un reflejo directo del ágape y la comunión fraterna descritos en el libro de los Hechos de los Apóstoles. En ausencia de un Estado eficiente, la ciudadanía y las comunidades de fe han asumido la responsabilidad bíblica de cuidar del prójimo compartiendo el poco alimento disponible.',
     reflection: 'En las horas más oscuras, la luz del Evangelio brilla a través del servicio abnegado. "No nos cansemos, pues, de hacer el bien; porque a su tiempo segaremos, si no desmayamos" (Gálatas 6:9).',
@@ -155,7 +163,9 @@ export const BIBLICAL_PARALLELS: BiblicalParallel[] = [
         'Planes elaborados por ingenieros, educadores y economistas venezolanos en el exilio para la reconstrucción.',
         'Concentraciones de fe donde millones oran por la paz, libertad y el regreso de sus hijos.',
         'Resiliencia cultural de la juventud venezolana en campos educativos, artísticos y científicos.'
-      ]
+      ],
+      imageUrl: nehemiahImg, // Placeholder: Modern counterpart required
+      imageCaption: 'Realidad Contemporánea: El anhelo y la preparación ciudadana para el renacimiento nacional.'
     },
     parallelAnalysis: 'Venezuela se encuentra en un momento histórico análogo al de la Jerusalén de Nehemías: un país destruido institucional y económicamente, pero con un pueblo lleno de talentos y ganas de reconstruir. El espíritu de Nehemías —oración combinada con trabajo arduo y unión de todos los sectores— es el modelo bíblico para el renacer venezolano.',
     reflection: 'El Salmo 126 expresa el júbilo del regreso: "Cuando el Señor hizo volver a los cautivos de Sion, éramos como los que sueñan. Entonces nuestra boca se llenó de risa, y nuestra lengua de alabanza... Grandes cosas ha hecho el Señor con nosotros; estaremos alegres".',

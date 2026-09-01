@@ -46,8 +46,14 @@ const CATEGORY_TABS: { id: GlobalThematicCategory; label: string; icon: React.FC
   { id: 'resources', label: 'Recursos & Creación', icon: Leaf },
 ];
 
+interface GlobalParallelismModuleProps {
+  onSelectTopicForDetailedAI?: (topic: string) => void;
+  onCategoryChange?: (category: GlobalThematicCategory) => void;
+}
+
 export const GlobalParallelismModule: React.FC<GlobalParallelismModuleProps> = ({
   onSelectTopicForDetailedAI,
+  onCategoryChange
 }) => {
   const [activeCategory, setActiveCategory] = useState<GlobalThematicCategory>('all');
   const [loading, setLoading] = useState(false);
@@ -94,6 +100,9 @@ export const GlobalParallelismModule: React.FC<GlobalParallelismModuleProps> = (
 
   const handleCategoryChange = (cat: GlobalThematicCategory) => {
     setActiveCategory(cat);
+    if (onCategoryChange) {
+      onCategoryChange(cat);
+    }
     fetchParallelismData(cat, searchQuery);
   };
 
@@ -211,6 +220,30 @@ ${item.biblicalParallel.moralReflection}`;
                     ⚡ {data.notes}
                   </span>
                 )}
+              </div>
+            )}
+
+            {/* Hallazgos Web Recientes (Grounding) */}
+            {data?.groundingSources && data.groundingSources.length > 0 && (
+              <div className="pt-4 space-y-2">
+                <h4 className="text-[10px] font-mono font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-2">
+                  <Sparkles className="w-3 h-3 animate-pulse" />
+                  Hallazgos Rastreados (Últimos 30 días):
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {data.groundingSources.map((source, i) => (
+                    <a
+                      key={i}
+                      href={source.uri}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 hover:border-cyan-400/50 hover:bg-white/10 text-[10px] text-zinc-300 transition-all"
+                    >
+                      <ExternalLink className="w-2.5 h-2.5 text-cyan-400" />
+                      <span className="truncate max-w-[150px]">{source.title}</span>
+                    </a>
+                  ))}
+                </div>
               </div>
             )}
           </div>

@@ -3,8 +3,8 @@ import { BookOpen, Newspaper, Sparkles, Compass, Search, Clock, Globe, Zap } fro
 import propheticEmblem from '../assets/images/prophetic_emblem_logo_1788112350378.jpg';
 
 interface HeaderProps {
-  activeTab: 'parallelism' | 'parallels' | 'ai-analyzer' | 'matrix' | 'verses' | 'future-projection';
-  setActiveTab: (tab: 'parallelism' | 'parallels' | 'ai-analyzer' | 'matrix' | 'verses' | 'future-projection') => void;
+  activeTab: 'parallelism' | 'parallels' | 'ai-analyzer' | 'matrix' | 'verses' | 'future-projection' | 'scratch';
+  setActiveTab: (tab: 'parallelism' | 'parallels' | 'ai-analyzer' | 'matrix' | 'verses' | 'future-projection' | 'scratch') => void;
   onOpenQuickSearch: () => void;
 }
 
@@ -51,6 +51,13 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenQ
       badge: 'RADAR',
       badgeColor: 'from-rose-500 to-pink-600',
       icon: Clock,
+    },
+    {
+      id: 'scratch' as const,
+      label: 'Scratch',
+      badge: 'TEST',
+      badgeColor: 'from-zinc-500 to-zinc-700',
+      icon: Zap,
     },
   ];
 

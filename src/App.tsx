@@ -8,13 +8,17 @@ import { VerseViewer } from './components/VerseViewer';
 import { FutureProjectionModule } from './components/FutureProjectionModule';
 import { QuickSearchModal } from './components/QuickSearchModal';
 import { AdMobBanner } from './components/AdMobBanner';
+import { ThematicDiptych } from './components/ThematicDiptych';
+import { ScratchStorage } from "scratch-storage";
 import { BIBLICAL_PARALLELS } from './data/parallels';
 import { BookOpen, Sparkles, Filter, Globe, Eye, Zap, Flame, Radio } from 'lucide-react';
 import editorialParallelImg from './assets/images/prophetic_parallel_editorial_1788112269744.jpg';
+import ScratchTest from './components/ScratchTest/ScratchTest';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'parallelism' | 'parallels' | 'ai-analyzer' | 'matrix' | 'verses' | 'future-projection'>('parallelism');
+  const [activeTab, setActiveTab] = useState<'parallelism' | 'parallels' | 'ai-analyzer' | 'matrix' | 'verses' | 'future-projection' | 'scratch'>('parallelism');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
+  const [globalCategory, setGlobalCategory] = useState<string>('all');
   const [selectedTopicForAI, setSelectedTopicForAI] = useState<string>('');
   const [isQuickSearchOpen, setIsQuickSearchOpen] = useState(false);
 
@@ -26,6 +30,15 @@ export default function App() {
   const handleRunQuickSearch = (query: string) => {
     setSelectedTopicForAI(query);
     setActiveTab('ai-analyzer');
+  };
+
+  const handleLibraryCategoryChange = (cat: string) => {
+    setCategoryFilter(cat);
+    setGlobalCategory(cat);
+  };
+
+  const handleFeedCategoryChange = (cat: string) => {
+    setGlobalCategory(cat);
   };
 
   const filteredParallels = BIBLICAL_PARALLELS.filter((item) => {
@@ -96,40 +109,10 @@ export default function App() {
               </div>
             </div>
 
-            {/* Editorial Visual Diptych Frame */}
-            <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-cyan-500/30 bg-black/60 shadow-inner group max-h-[135px] sm:max-h-[220px] md:max-h-[290px]">
-              <img
-                src={editorialParallelImg}
-                alt="Estudio Editorial de Paralelismo Profético: Episodio Bíblico y Contexto Contemporáneo"
-                referrerPolicy="no-referrer"
-                className="w-full h-[120px] sm:h-[190px] md:h-[260px] object-cover object-center transform group-hover:scale-[1.02] transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40 pointer-events-none" />
-              
-              {/* Diptych Section Identifiers */}
-              <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10 flex items-center gap-1 sm:gap-1.5 bg-black/80 backdrop-blur-md border border-cyan-400/50 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-[8.5px] sm:text-[10px] font-mono text-cyan-300 shadow-md">
-                <BookOpen className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-cyan-400 shrink-0" />
-                <span className="font-bold uppercase tracking-wider truncate max-w-[110px] sm:max-w-none">Bíblico Histórico</span>
-              </div>
-
-              <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10 flex items-center gap-1 sm:gap-1.5 bg-black/80 backdrop-blur-md border border-fuchsia-400/50 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-[8.5px] sm:text-[10px] font-mono text-fuchsia-300 shadow-md">
-                <Globe className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-fuchsia-400 shrink-0" />
-                <span className="font-bold uppercase tracking-wider truncate max-w-[110px] sm:max-w-none">Contemporáneo</span>
-              </div>
-
-              {/* Bottom Caption Overlay */}
-              <div className="absolute bottom-1.5 left-1.5 right-1.5 sm:bottom-2.5 sm:left-2.5 sm:right-2.5 z-10 flex items-center justify-between gap-2 text-[9px] sm:text-xs text-zinc-300 bg-black/85 backdrop-blur-md px-2.5 py-1 sm:p-2 rounded-lg sm:rounded-xl border border-white/10">
-                <div className="flex items-center gap-1.5 min-w-0">
-                  <Eye className="w-3 h-3 text-cyan-400 shrink-0" />
-                  <p className="font-sans text-zinc-200 text-[9.5px] sm:text-xs truncate">
-                    Díptico Editorial: Travesía y dispersión humana frente a las crisis de la historia.
-                  </p>
-                </div>
-                <span className="text-[8px] sm:text-[9px] font-mono text-cyan-300 uppercase tracking-widest shrink-0 hidden xs:inline-block font-bold">
-                  ⚡ 16:9 4K
-                </span>
-              </div>
-            </div>
+            {/* Editorial Visual Diptych Frame (Dynamic) */}
+            <ThematicDiptych
+              category={globalCategory}
+            />
 
           </div>
         </div>
@@ -139,6 +122,7 @@ export default function App() {
           <div className="space-y-6">
             <GlobalParallelismModule
               onSelectTopicForDetailedAI={handleExploreWithAI}
+              onCategoryChange={handleFeedCategoryChange}
             />
             {/* AdMob Banner (Inicio) - Debajo del contenido principal */}
             <AdMobBanner section="home" sectionLabel="Inicio" />
@@ -169,7 +153,7 @@ export default function App() {
                   return (
                     <button
                       key={cat.id}
-                      onClick={() => setCategoryFilter(cat.id)}
+                      onClick={() => handleLibraryCategoryChange(cat.id)}
                       className={`px-3 py-1.5 text-xs font-mono font-bold rounded-xl transition-all duration-300 active:scale-95 ${
                         isSelected
                           ? `bg-gradient-to-r ${cat.color} text-black shadow-[0_0_15px_rgba(6,182,212,0.35)] scale-[1.03]`
@@ -235,6 +219,9 @@ export default function App() {
           <FutureProjectionModule
             onAnalyzeCustomHypothesis={handleExploreWithAI}
           />
+        )}
+        {activeTab === 'scratch' && (
+          <ScratchTest />
         )}
 
       </main>

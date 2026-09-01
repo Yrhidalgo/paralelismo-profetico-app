@@ -1,5 +1,5 @@
-import { GoogleGenAI } from "@google/genai";
 import { scrapeGlobalNews, ScrapedArticle } from "./scraper.js";
+import { getAICompletion } from "./aiProvider.js";
 
 export interface ProcessedParallelItem {
   id: string;
@@ -266,7 +266,6 @@ const CURATED_GLOBAL_PARALLELS: ProcessedParallelItem[] = [
 ];
 
 export async function generateGlobalParallelism(
-  ai: GoogleGenAI | null,
   options: { category?: string; customSearch?: string; refresh?: boolean } = {}
 ): Promise<{
   items: ProcessedParallelItem[];
@@ -301,10 +300,8 @@ export async function generateGlobalParallelism(
     console.warn("Scraper notice:", e instanceof Error ? e.message : e);
   }
 
-  // 2. If Gemini is available, attempt real-time exegesis
-  if (ai) {
-    try {
-      const systemInstruction = `Eres un eminente teólogo, historiador y analista ético global.
+  // 2. Attempt real-time exegesis using AI Provider
+  const systemInstruction = `Eres un eminente teólogo, historiador y analista ético global.
 Tu misión es recibir titulares y noticias de actualidad mundial de diversos ámbitos (economía, sociedad, finanzas, gobernanza, recursos naturales) y procesarlos para identificar paralelos rigurosos y profundos con las Sagradas Escrituras (Antiguo y Nuevo Testamento).
 
 REGLAS FUNDAMENTALES:
@@ -339,37 +336,35 @@ Debes responder ÚNICAMENTE en formato JSON con la siguiente estructura:
   ]
 }`;
 
-      let promptContent = "";
-      if (customSearch) {
-        promptContent = `Busca y analiza noticias de actualidad global relevantes sobre el siguiente tema: "${customSearch}". Identifica paralelos profundos con pasajes bíblicos del Antiguo y Nuevo Testamento sin sesgos geográficos.`;
-      } else if (scrapedArticles.length > 0) {
-        const topArticles = scrapedArticles.slice(0, 5);
-        promptContent = `Procesa los siguientes titulares y hechos de actualidad global recién recopilados por nuestro scraper en las áreas de ${category === 'all' ? 'economía, finanzas y sociedad' : category}:
+  let promptContent = "";
+  if (customSearch) {
+    promptContent = `Busca y analiza noticias de actualidad global relevantes sobre el siguiente tema: "${customSearch}". Identifica paralelos profundos con pasajes bíblicos del Antiguo y Nuevo Testamento sin sesgos geográficos.`;
+  } else if (scrapedArticles.length > 0) {
+    const topArticles = scrapedArticles.slice(0, 5);
+    promptContent = `Procesa los siguientes titulares y hechos de actualidad global recién recopilados por nuestro scraper en las áreas de ${category === 'all' ? 'economía, finanzas y sociedad' : category}:
 
 ${topArticles.map((a, i) => `${i + 1}. [${a.source}] [${a.category.toUpperCase()}] "${a.title}" - Resumen: ${a.summary}`).join('\n\n')}
 
 Genera para cada uno el análisis exhaustivo de paralelismo bíblico siguiendo la estructura JSON solicitada.`;
-      } else {
-        promptContent = `Busca las noticias de actualidad global más relevantes del momento en las áreas de ${category === 'all' ? 'economía, finanzas, sociedad, gobernanza y recursos' : category}. Para cada hecho relevante, elabora un análisis riguroso de paralelismo con pasajes bíblicos.`;
-      }
+  } else {
+    promptContent = `Busca las noticias de actualidad global más relevantes del momento en las áreas de ${category === 'all' ? 'economía, finanzas, sociedad, gobernanza y recursos' : category}. Para cada hecho relevante, elabora un análisis riguroso de paralelismo con pasajes bíblicos.`;
+  }
 
-      const response = await ai.models.generateContent({
-        model: "gemini-3.7-flash",
-        contents: promptContent,
-        config: {
-          systemInstruction,
-          responseMimeType: "application/json",
-          tools: [{ googleSearch: {} }],
-        },
-      });
+  try {
+    const aiResult = await getAICompletion({
+      systemInstruction,
+      prompt: promptContent,
+      responseMimeType: "application/json"
+    });
 
-      const rawJson = response.text || "{}";
-      const parsed = JSON.parse(rawJson);
+    if (aiResult.text) {
+      const parsed = JSON.parse(aiResult.text);
 
       if (parsed.items && Array.isArray(parsed.items) && parsed.items.length > 0) {
         const result = {
           items: parsed.items,
           scrapedSources: sourcesUsed.length > 0 ? sourcesUsed : ["Reuters", "BBC World", "Financial Times", "UN News", "FMI"],
+          groundingSources: aiResult.groundingSources,
           totalAnalyzed: parsed.items.length,
           scannedCategory: category,
           timestamp: new Date().toISOString(),
@@ -379,14 +374,9 @@ Genera para cada uno el análisis exhaustivo de paralelismo bíblico siguiendo l
         memoryCache.set(cacheKey, { data: result, expiry: Date.now() + CACHE_TTL_MS });
         return result;
       }
-    } catch (geminiError: unknown) {
-      // Check if rate limit (429) or quota exceeded
-      const errString = String(geminiError);
-      const isRateLimit = errString.includes('429') || errString.includes('RESOURCE_EXHAUSTED') || errString.includes('quota');
-      if (!isRateLimit) {
-        console.warn("AI Parallelism engine notice:", geminiError instanceof Error ? geminiError.message : geminiError);
-      }
     }
+  } catch (error) {
+    console.error("[ParallelismEngine] Error calling AI Provider:", error);
   }
 
   // 3. Fallback to rich curated exegesis corpus with category and search filtering

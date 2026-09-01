@@ -296,6 +296,26 @@ ${parallel.reflection}`;
             ))}
           </div>
 
+          {/* Contemporary Event Illustration in Reading Mode */}
+          {parallel.venezuelaNewsContext.imageUrl && (
+            <div className={`relative rounded-2xl overflow-hidden border ${isParchment ? 'border-[#d9cdb8] shadow-md' : 'border-[#332f2a] shadow-2xl'} my-4 group`}>
+              <img
+                src={parallel.venezuelaNewsContext.imageUrl}
+                alt={parallel.venezuelaNewsContext.imageCaption || parallel.venezuelaNewsContext.headline}
+                className={`w-full h-44 sm:h-64 md:h-72 object-cover object-center transform group-hover:scale-[1.01] transition-transform duration-500 ${parallel.venezuelaNewsContext.imageUrl === parallel.biblicalPassage.imageUrl ? 'grayscale brightness-[0.8] opacity-70' : ''}`}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between text-xs font-mono text-white/90">
+                <span className="text-rose-400 font-serif italic truncate max-w-[85%]">
+                  {parallel.venezuelaNewsContext.imageCaption || 'Representación Actual'}
+                </span>
+                <span className="text-[10px] uppercase tracking-wider text-zinc-300 font-mono shrink-0">
+                  Realidad Actual
+                </span>
+              </div>
+            </div>
+          )}
+
           <p className={`font-serif ${textSizeClasses[fontSize]} leading-relaxed ${textColor}`}>
             {parallel.venezuelaNewsContext.summary}
           </p>

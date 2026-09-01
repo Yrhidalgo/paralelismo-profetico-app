@@ -11,6 +11,8 @@ export interface VenezuelaNewsContext {
   summary: string;
   mediaSources: string[];
   keyFacts: string[];
+  imageUrl?: string;
+  imageCaption?: string;
 }
 
 export interface BiblicalParallel {
@@ -76,6 +78,7 @@ export interface GlobalParallelItem {
 export interface ParallelismApiResponse {
   items: GlobalParallelItem[];
   scrapedSources: string[];
+  groundingSources?: { title: string; uri: string }[];
   totalAnalyzed: number;
   scannedCategory: string;
   timestamp: string;
