@@ -3,8 +3,16 @@ import {createRoot} from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+console.log("React mounting...");
+
+const container = document.getElementById('root');
+if (!container) {
+  console.error("Critical: Root container not found!");
+} else {
+  createRoot(container).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+}
+

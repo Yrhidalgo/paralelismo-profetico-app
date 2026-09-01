@@ -11,7 +11,6 @@ import { AdMobBanner } from './components/AdMobBanner';
 import { ThematicDiptych } from './components/ThematicDiptych';
 import { BIBLICAL_PARALLELS } from './data/parallels';
 import { BookOpen, Sparkles, Filter, Globe, Eye, Zap, Flame, Radio } from 'lucide-react';
-import editorialParallelImg from './assets/images/prophetic_parallel_editorial_1788112269744.jpg';
 import ScratchTest from './components/ScratchTest/ScratchTest';
 
 export default function App() {

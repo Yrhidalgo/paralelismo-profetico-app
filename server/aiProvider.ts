@@ -18,8 +18,8 @@ Estructura tu respuesta en formato JSON estricto con las siguientes llaves:
 Respóndeme ÚNICAMENTE en JSON válido sin marcadores de markdown.`;
 
 export async function getAIComparison(userPrompt: string): Promise<AIAnalysisResponse> {
-  const groqKey = process.env.GROQ_API_KEY;
-  const geminiKey = process.env.GEMINI_API_KEY;
+  const groqKey = (process.env.GROQ_API_KEY || "").trim().replace(/^["\']|["\']$/g, "");
+  const geminiKey = (process.env.GEMINI_API_KEY || "").trim().replace(/^["\']|["\']$/g, "");
   const startTime = Date.now();
 
   // Fallback response for complete failure
@@ -38,37 +38,41 @@ export async function getAIComparison(userPrompt: string): Promise<AIAnalysisRes
 
   // 1. TRY GROQ
   if (groqKey && groqKey !== "MY_GROQ_API_KEY") {
+    const groqStartTime = Date.now();
     try {
-      console.log(`[AIProvider] Intentando con Groq (llama3-8b-8192)...`);
+      console.log(`[AIProvider] PROVIDER=GROQ START`);
       const groq = new Groq({ apiKey: groqKey });
       const completion = await groq.chat.completions.create({
         messages: [
           { role: "system", content: SYSTEM_INSTRUCTION_COMPARE },
           { role: "user", content: userPrompt }
         ],
-        model: "llama3-8b-8192",
+        model: "llama-3.3-70b-versatile",
         response_format: { type: "json_object" }
       });
 
       const content = completion.choices[0]?.message?.content;
       if (content) {
         const parsed = JSON.parse(content);
-        const duration = Date.now() - startTime;
-        console.log(`[AIProvider] Éxito con Groq (${duration}ms)`);
+        const duration = Date.now() - groqStartTime;
+        console.log(`[AIProvider] PROVIDER=GROQ SUCCESS duration=${duration}ms`);
         return {
           ...parsed,
           timestamp: new Date().toISOString()
         };
       }
     } catch (err: any) {
-      console.error(`[AIProvider] Fallo en Groq (Code: ${err.status || 'unknown'}):`, err.message);
+      const duration = Date.now() - groqStartTime;
+      const statusCode = err.status || err.statusCode || 'unknown';
+      console.error(`[AIProvider] PROVIDER=GROQ ERROR duration=${duration}ms code=${statusCode} message="${err.message}"`);
     }
   }
 
   // 2. TRY GEMINI (Fallback)
   if (geminiKey && geminiKey !== "MY_GEMINI_API_KEY") {
+    const geminiStartTime = Date.now();
     try {
-      console.log(`[AIProvider] Intentando con Gemini (gemini-1.5-flash)...`);
+      console.log(`[AIProvider] PROVIDER=GEMINI START`);
       const genAI = new GoogleGenAI({
         apiKey: geminiKey,
         httpOptions: {
@@ -89,8 +93,8 @@ export async function getAIComparison(userPrompt: string): Promise<AIAnalysisRes
 
       const rawText = response.text || "{}";
       const parsedData = JSON.parse(rawText);
-      const duration = Date.now() - startTime;
-      console.log(`[AIProvider] Éxito con Gemini (${duration}ms)`);
+      const duration = Date.now() - geminiStartTime;
+      console.log(`[AIProvider] PROVIDER=GEMINI SUCCESS duration=${duration}ms`);
 
       return {
         analysis: parsedData.analysis || finalFallback.analysis,
@@ -99,12 +103,15 @@ export async function getAIComparison(userPrompt: string): Promise<AIAnalysisRes
         timestamp: new Date().toISOString()
       };
     } catch (err: any) {
-      console.error(`[AIProvider] Fallo en Gemini:`, err.message);
+      const duration = Date.now() - geminiStartTime;
+      const statusCode = err.status || err.statusCode || 'unknown';
+      const errMsg = err.message || String(err);
+      console.error(`[AIProvider] PROVIDER=GEMINI ERROR duration=${duration}ms code=${statusCode} message="${errMsg}"`);
     }
   }
 
   // 3. FINAL FALLBACK
-  console.warn(`[AIProvider] Todos los proveedores fallaron. Usando respuesta estática.`);
+  console.warn(`[AIProvider] PROVIDER=NONE FALLBACK active duration=${Date.now() - startTime}ms`);
   return finalFallback;
 }
 
@@ -122,13 +129,12 @@ export async function getAICompletion(params: {
   prompt: string;
   responseMimeType?: "application/json" | "text/plain";
 }): Promise<AICompletionResult> {
-  const groqKey = process.env.GROQ_API_KEY;
-  const geminiKey = process.env.GEMINI_API_KEY;
+  const groqKey = (process.env.GROQ_API_KEY || "").trim().replace(/^["\']|["\']$/g, "");
+  const geminiKey = (process.env.GEMINI_API_KEY || "").trim().replace(/^["\']|["\']$/g, "");
 
-  // 1. Groq - Rápido pero sin búsqueda web directa (usa contexto enviado)
+  // 1. Groq - Rápido pero sin búsqueda web directa
   if (groqKey && groqKey !== "MY_GROQ_API_KEY") {
     try {
-      console.log(`[AIProvider] Intentando con Groq (llama-3.3-70b-versatile)...`);
       const groq = new Groq({ apiKey: groqKey });
       const completion = await groq.chat.completions.create({
         messages: [
@@ -139,15 +145,14 @@ export async function getAICompletion(params: {
         response_format: params.responseMimeType === "application/json" ? { type: "json_object" } : undefined
       });
       return { text: completion.choices[0]?.message?.content || null };
-    } catch (err) {
-      console.error("[AIProvider] getAICompletion (Groq) Error:", err);
+    } catch (err: any) {
+      console.error(`[AIProvider] getAICompletion (Groq) Error: ${err.message}`);
     }
   }
 
   // 2. Gemini - Lento pero rastrea la web en busca de hallazgos reales
   if (geminiKey && geminiKey !== "MY_GEMINI_API_KEY") {
     try {
-      console.log(`[AIProvider] Intentando con Gemini (Rastreador de hallazgos)...`);
       const genAI = new GoogleGenAI({
         apiKey: geminiKey,
         httpOptions: {
@@ -169,7 +174,8 @@ export async function getAICompletion(params: {
 
       const groundingSources: { title: string; uri: string }[] = [];
       const candidates = (response as any).candidates?.[0];
-      const groundingChunks = candidates?.groundingMetadata?.groundingChunks || [];
+      const groundingMetadata = candidates?.groundingMetadata;
+      const groundingChunks = groundingMetadata?.groundingChunks || [];
 
       for (const chunk of groundingChunks) {
         if (chunk.web?.uri) {
@@ -184,8 +190,8 @@ export async function getAICompletion(params: {
         text: response.text || null,
         groundingSources: groundingSources.length > 0 ? groundingSources : undefined
       };
-    } catch (err) {
-      console.error("[AIProvider] getAICompletion (Gemini) Error:", err);
+    } catch (err: any) {
+      console.error(`[AIProvider] getAICompletion (Gemini) Error: ${err.message}`);
     }
   }
 
