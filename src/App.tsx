@@ -9,7 +9,6 @@ import { FutureProjectionModule } from './components/FutureProjectionModule';
 import { QuickSearchModal } from './components/QuickSearchModal';
 import { AdMobBanner } from './components/AdMobBanner';
 import { ThematicDiptych } from './components/ThematicDiptych';
-import { ScratchStorage } from "scratch-storage";
 import { BIBLICAL_PARALLELS } from './data/parallels';
 import { BookOpen, Sparkles, Filter, Globe, Eye, Zap, Flame, Radio } from 'lucide-react';
 import editorialParallelImg from './assets/images/prophetic_parallel_editorial_1788112269744.jpg';

@@ -33,10 +33,6 @@ import justiceImg from '../assets/images/biblical_justice_scales_1788113364062.j
 import solidarityImg from '../assets/images/solidarity_bread_sharing_1788134022438.jpg';
 import nehemiahImg from '../assets/images/nehemiah_wall_rebuilding_1788134434835.jpg';
 
-interface GlobalParallelismModuleProps {
-  onSelectTopicForDetailedAI?: (topic: string) => void;
-}
-
 const CATEGORY_TABS: { id: GlobalThematicCategory; label: string; icon: React.FC<{ className?: string }> }[] = [
   { id: 'all', label: 'Todas las Temáticas', icon: Globe },
   { id: 'economy', label: 'Economía & Mercados', icon: TrendingUp },
