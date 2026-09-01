@@ -9,6 +9,9 @@ export default defineConfig(() => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
+        // The package browser entry imports Node's `events`; use its bundled
+        // browser build so Scratch can initialize without a Node polyfill.
+        'scratch-audio': path.resolve(__dirname, 'node_modules/scratch-audio/dist.js'),
       },
     },
     server: {

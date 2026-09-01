@@ -11,10 +11,9 @@ import { AdMobBanner } from './components/AdMobBanner';
 import { ThematicDiptych } from './components/ThematicDiptych';
 import { BIBLICAL_PARALLELS } from './data/parallels';
 import { BookOpen, Sparkles, Filter, Globe, Eye, Zap, Flame, Radio } from 'lucide-react';
-import ScratchTest from './components/ScratchTest/ScratchTest';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'parallelism' | 'parallels' | 'ai-analyzer' | 'matrix' | 'verses' | 'future-projection' | 'scratch'>('parallelism');
+  const [activeTab, setActiveTab] = useState<'parallelism' | 'parallels' | 'ai-analyzer' | 'matrix' | 'verses' | 'future-projection'>('parallelism');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [globalCategory, setGlobalCategory] = useState<string>('all');
   const [selectedTopicForAI, setSelectedTopicForAI] = useState<string>('');
@@ -39,13 +38,17 @@ export default function App() {
     setGlobalCategory(cat);
   };
 
+  const handleScanComplete = () => {
+    setActiveTab('parallels');
+  };
+
   const filteredParallels = BIBLICAL_PARALLELS.filter((item) => {
     if (categoryFilter === 'all') return true;
     return item.category === categoryFilter;
   });
 
   return (
-    <div className="min-h-screen bg-[#07070a] text-[#f3f4f6] flex flex-col font-sans selection:bg-cyan-400 selection:text-black relative overflow-x-hidden">
+    <div className="app-shell min-h-screen bg-[#07070a] text-[#f3f4f6] flex flex-col font-sans selection:bg-cyan-400 selection:text-black relative overflow-x-hidden">
       
       {/* Background Ambient Cyber Meshes */}
       <div className="fixed top-0 left-1/4 w-[500px] h-[350px] bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse" />
@@ -63,26 +66,26 @@ export default function App() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-7 space-y-5 sm:space-y-7">
         
         {/* Gen Z Neon Hero Box */}
-        <div className="relative rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r from-cyan-500/40 via-fuchsia-500/40 to-amber-500/40 shadow-[0_0_40px_rgba(6,182,212,0.12)]">
-          <div className="bg-[#0b0b14]/95 rounded-2xl sm:rounded-3xl p-4 sm:p-7 relative overflow-hidden space-y-4 sm:space-y-6 backdrop-blur-xl">
+        <div className="relative rounded-[1.65rem] sm:rounded-[2rem] p-[1px] bg-gradient-to-r from-cyan-500/40 via-fuchsia-500/40 to-amber-500/40 shadow-[0_0_40px_rgba(6,182,212,0.14)] ring-1 ring-white/5">
+          <div className="bg-[#0b0b14]/95 rounded-[1.5rem] sm:rounded-[1.8rem] p-4 sm:p-7 relative overflow-hidden space-y-4 sm:space-y-6 backdrop-blur-xl border border-white/5">
             
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
               <div className="space-y-2 sm:space-y-3 max-w-4xl">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 text-cyan-300 border border-cyan-500/40 flex items-center gap-1.5">
                     <Zap className="w-3 h-3 text-amber-400" />
                     <span>Estudio Comparativo Teológico & Hechos Globales</span>
                   </span>
                   <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono bg-fuchsia-500/10 text-fuchsia-300 border border-fuchsia-500/30">
                     <Flame className="w-2.5 h-2.5" />
-                    <span>Live Stream</span>
+                    <span>Actualidad</span>
                   </span>
                 </div>
 
                 <h2 className="text-xl sm:text-3xl md:text-4xl font-black font-display tracking-tight text-white leading-tight">
                   Paralelismos Bíblicos frente a la <span className="bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-amber-300 bg-clip-text text-transparent">Actualidad Global</span>
                 </h2>
-                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-light">
+                <p className="max-w-3xl text-xs sm:text-sm text-zinc-300 leading-relaxed font-light">
                   Los grandes acontecimientos del mundo contemporáneo en economía, sociedad y finanzas —inflación monetaria, deuda global, crisis migratorias y clamor por justicia— reflejan patrones universales descritos en las Sagradas Escrituras.
                 </p>
               </div>
@@ -94,7 +97,7 @@ export default function App() {
                   className="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-400 to-teal-300 hover:from-cyan-300 hover:to-teal-200 text-black rounded-xl transition-all shadow-[0_0_20px_rgba(6,182,212,0.4)] text-center flex items-center justify-center gap-2 active:scale-95"
                 >
                   <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-black" />
-                  <span>Feed Global (En Vivo)</span>
+                  <span>Feed Global</span>
                 </button>
 
                 <button
@@ -102,7 +105,7 @@ export default function App() {
                   className="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider bg-[#141424] hover:bg-[#1f1f38] text-cyan-300 border border-cyan-500/40 hover:border-cyan-400 rounded-xl transition-all text-center flex items-center justify-center gap-2 active:scale-95 shadow-md"
                 >
                   <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0 animate-pulse" />
-                  <span>Consulta Libre IA</span>
+                  <span>Consulta</span>
                 </button>
               </div>
             </div>
@@ -115,12 +118,13 @@ export default function App() {
           </div>
         </div>
 
-        {/* TAB 0: Global News Scraper & Biblical Parallelism Engine (Inicio) */}
+        {/* TAB 0: Feed global y paralelismo bíblico (Inicio) */}
         {activeTab === 'parallelism' && (
           <div className="space-y-6">
             <GlobalParallelismModule
               onSelectTopicForDetailedAI={handleExploreWithAI}
               onCategoryChange={handleFeedCategoryChange}
+              onScanComplete={handleScanComplete}
             />
             {/* AdMob Banner (Inicio) - Debajo del contenido principal */}
             <AdMobBanner section="home" sectionLabel="Inicio" />
@@ -218,10 +222,6 @@ export default function App() {
             onAnalyzeCustomHypothesis={handleExploreWithAI}
           />
         )}
-        {activeTab === 'scratch' && (
-          <ScratchTest />
-        )}
-
       </main>
 
       {/* Gen Z Neon Footer */}
@@ -239,13 +239,13 @@ export default function App() {
             </div>
 
             <p className="text-zinc-400 text-[11px]">
-              Scraper & Data: BBC, Reuters, Financial Times, UN News, FMI, FAO, AP.
+              Fuentes: BBC, Reuters, Financial Times, UN News, FMI, FAO, AP.
             </p>
           </div>
 
           <div className="pt-4 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-zinc-500 text-[10px] gap-2">
             <p>
-              Análisis comparativo teológico e histórico global © 2026 • Gen Z Edition
+              Análisis comparativo teológico e histórico global © 2026 • Edición General
             </p>
             <p className="text-cyan-400 font-mono font-bold tracking-wider">
               ⚡ PROVERBIOS // LEVÍTICO // SANTIAGO // APOCALIPSIS // HAGEO

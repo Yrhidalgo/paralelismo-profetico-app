@@ -45,11 +45,13 @@ const CATEGORY_TABS: { id: GlobalThematicCategory; label: string; icon: React.FC
 interface GlobalParallelismModuleProps {
   onSelectTopicForDetailedAI?: (topic: string) => void;
   onCategoryChange?: (category: GlobalThematicCategory) => void;
+  onScanComplete?: () => void;
 }
 
 export const GlobalParallelismModule: React.FC<GlobalParallelismModuleProps> = ({
   onSelectTopicForDetailedAI,
-  onCategoryChange
+  onCategoryChange,
+  onScanComplete
 }) => {
   const [activeCategory, setActiveCategory] = useState<GlobalThematicCategory>('all');
   const [loading, setLoading] = useState(false);
@@ -79,6 +81,9 @@ export const GlobalParallelismModule: React.FC<GlobalParallelismModuleProps> = (
 
       const json: ParallelismApiResponse = await res.json();
       setData(json);
+      if (isRefresh && onScanComplete) {
+        onScanComplete();
+      }
       if (json.items.length > 0 && !selectedItem) {
         setSelectedItem(json.items[0]);
       }
@@ -176,7 +181,7 @@ ${item.biblicalParallel.moralReflection}`;
   return (
     <div className="space-y-5 sm:space-y-6">
       
-      {/* Top Banner / Scraper Engine Status */}
+      {/* Top Banner / Estado del feed */}
       <div className="relative rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r from-cyan-500/30 via-indigo-500/30 to-fuchsia-500/30 shadow-2xl">
         <div className="bg-[#0b0b14]/95 rounded-2xl sm:rounded-3xl p-5 sm:p-7 flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-6 backdrop-blur-xl">
           <div className="space-y-3 max-w-3xl">
@@ -187,7 +192,7 @@ ${item.biblicalParallel.moralReflection}`;
               </span>
               <span className="text-cyan-300 font-mono text-xs uppercase tracking-widest font-extrabold flex items-center gap-1.5 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/30">
                 <Radio className="w-3.5 h-3.5 text-cyan-400" />
-                Live Radar • Scraper Global & IA Profética
+                Live Radar • Actualidad Global & Análisis Profético
               </span>
             </div>
 

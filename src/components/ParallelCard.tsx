@@ -146,12 +146,12 @@ ${parallel.venezuelaNewsContext.summary}
           <button
             onClick={() => onExploreWithAI(parallel.title)}
             className="relative group/btn overflow-hidden rounded-xl p-[1px] font-mono text-xs font-bold uppercase tracking-wider active:scale-95 transition-all"
-            title="Analizar a fondo con IA Gemini"
+            title="Analizar a fondo con IA"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-amber-400 opacity-90 group-hover/btn:opacity-100" />
             <span className="relative flex items-center gap-1.5 px-3 py-1.5 bg-[#0e0e18] text-white rounded-xl group-hover/btn:bg-transparent transition-colors">
               <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
-              <span className="hidden sm:inline">Profundizar IA</span>
+              <span className="hidden sm:inline">Profundizar</span>
             </span>
           </button>
 

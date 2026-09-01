@@ -97,7 +97,7 @@ ${result.newsSummary}`;
           <div className="flex items-center gap-2 text-cyan-300 font-mono text-xs uppercase tracking-widest font-extrabold">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-            <span>ANALIZADOR IA EN VIVO • GEMINI ENGINE</span>
+            <span>ANALIZADOR EN VIVO</span>
           </div>
 
           <h2 className="text-xl sm:text-3xl font-black font-display text-white">
@@ -164,7 +164,7 @@ ${result.newsSummary}`;
       <AdMobBanner 
         adUnitId="ca-app-pub-2559338430231736/6882475219" 
         section="midpage" 
-        sectionLabel="Consulta Libre IA" 
+        sectionLabel="Consulta" 
         positionLabel="Mitad de Pantalla" 
       />
 

@@ -397,7 +397,7 @@ ${parallel.reflection}`;
               }`}
             >
               <Sparkles className="w-4 h-4" />
-              <span>Analizar este Paralelo con IA Gemini</span>
+              <span>Analizar este Paralelo</span>
             </button>
           )}
         </div>

@@ -45,7 +45,7 @@ export const SECTION_NAMES: Record<AdSection, string> = {
   matrix: 'Matriz Comparativa',
   projections: 'Proyecciones Futuras',
   midpage: 'Mitad de Pantalla',
-  'ai-analyzer': 'Consulta Libre IA',
+  'ai-analyzer': 'Consulta',
 };
 
 export function getSectionAdUnitId(section: AdSection, customAdUnitId?: string): string {
